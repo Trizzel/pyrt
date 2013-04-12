@@ -29,13 +29,8 @@ function genSalt() {
 }
 
 function hashPassword(pw) {
-    var new_salt = genSalt();
-    var token = getToken();
-    var token_salt = CryptoJS.SHA256(token + new_salt);
-    var hashed1 = CryptoJS.SHA256(pw);
-    var hashed2 = CryptoJS.SHA256(hashed1 + getPermSalt());
-    var hashed3 = CryptoJS.SHA256(hashed2 + token_salt);
-    return "$" + new_salt + "$" + hashed3;
+    var hash = computeHP(pw)
+    return "$" + hash[0] + "$" + hash[1];
 }
 
 function computeHP(pw) {
